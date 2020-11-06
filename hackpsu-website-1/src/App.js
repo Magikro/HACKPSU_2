@@ -1,8 +1,8 @@
 import React from 'react'
-//import Canvas from './Canvas'
+import Canvas from './Canvas.js'
 
 function App() {
-  return <h1>Hello world!</h1>
+  return <Canvas />
 }
 
 export default App;
