@@ -4,19 +4,23 @@ const Canvas = props => {
 
     const canvasRef = useRef(null)
 
-    window.addEventListener('load', ()=> {
 
-        resize();
-        document.addEventListener('mousedown', startPainting);
-        document.addEventListener('mouseup', stopPainting);
-        document.addEventListener('mousemove', sketch);
-        window.addEventListener('resize', resize);
 
-    });
+
 
     useEffect(() => {
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
+
+        window.addEventListener('load', ()=> {
+
+            resize();
+            document.addEventListener('mousedown', startPainting);
+            document.addEventListener('mouseup', stopPainting);
+            document.addEventListener('mousemove', sketch);
+            window.addEventListener('resize', resize);
+    
+        });
 
         function resize(){
             ctx.canvas.width = window.innerWidth;
@@ -36,9 +40,28 @@ const Canvas = props => {
             paint = true;
             getPosition(event);
         }
+        function stopPainting(event){
+            paint = false;
+        }
 
-        ctx.fillStyle = '#000000'
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        function sketch(event){
+            if(!paint) return;
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+
+            ctx.lineCape = 'round';
+
+            ctx.strokeStyle = '#000000';
+
+            ctx.moveTo(coord.x, coord.y);
+
+            getPosition(event);
+
+            ctx.lineTo(coord.x , coord.y);
+
+            ctx.stroke();
+        }
+
     }, [])
 
     return <canvas ref={canvasRef} {...props}/>
