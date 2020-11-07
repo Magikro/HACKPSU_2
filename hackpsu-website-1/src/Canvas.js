@@ -1,16 +1,18 @@
 import React, { useRef, useEffect } from 'react'
 
+
 const Canvas = props => {
 
     const canvasRef = useRef(null)
 
-
-
-
+    function clearCanvas()
+    {
+        canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    }
 
     useEffect(() => {
         const canvas = canvasRef.current
-        const ctx = canvas.getContext('2d')
+        const ctx = canvas.getContext('2d');
 
         window.addEventListener('load', ()=> {
 
@@ -64,7 +66,12 @@ const Canvas = props => {
 
     }, [])
 
-    return <canvas ref={canvasRef} {...props}/>
+    return (
+    <>
+        <button onClick={clearCanvas}>Clear Canvas</button>
+        <canvas ref={canvasRef} {...props}/>
+    </>
+    )
 }
 
 export default Canvas
